@@ -84,7 +84,7 @@ int main(){
 
         }
 
-        // Decimal to Hexadecimal
+        // Hexadecimal to Binary
         if(choice == "hex"){
             
             cout << "Enter the Hexadecimal value you want to convert: ";
@@ -109,7 +109,7 @@ int main(){
 
         }
 
-        // Decimal to Octal
+        // Octal to Binary
         if(choice == "oct"){
             
             cout << "Enter the Octal value you want to convert: ";
