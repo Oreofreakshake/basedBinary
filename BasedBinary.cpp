@@ -1,198 +1,85 @@
-#include<iostream>
-#include <cctype>
-#include <cstring>
+#include <iostream>
+#include <math.h>
+#include <string.h>
 
 using namespace std;
 
-void BaseTenToTwo(int NumYouEnter){
-    
-    string bin{};
-    
-    while( NumYouEnter > 0 ) {
-        if( NumYouEnter % 2 == 0 ) bin.insert( bin.begin( ), '0' );
-        else bin.insert( bin.begin( ), '1' );
-        
-        NumYouEnter >>= 1;
+long long int convertToDec(char n1[], int b1){
+
+    int j=strlen(n1)-1, k=0;
+
+    long long int n=0;
+
+    while(j>=0){
+        int i=(int)n1[j--];
+        if(i>=48&&i<=57){
+            i-=48;      //0=48
+        }
+        else if(i>=65&&i<=90){
+            i-=55;      //10=A
+        }
+        else if(i>=97&&i<=122){
+            i-=61;      //36=a
+        }
+        else if(i==43||i==44){
+            i+=19;       //62=+
+        }
+        n= n + (i*pow(b1,k++));
     }
-    
-    cout << "\nbinary value = " << bin << "\n";
+    return n;
 }
 
-
-void BaseSixteenToTwo(char NumYouEnter[10]){
-	
-    int i=0;
-
-    cout<<"\nbinary Value = ";
-    while(NumYouEnter[i])
-    {
-        switch(NumYouEnter[i])
-        {
-            case '0':
-                cout<<"0000";
-                break;
-            case '1':
-                cout<<"0001";
-                break;
-            case '2':
-                cout<<"0010";
-                break;
-            case '3':
-                cout<<"0011";
-                break;
-            case '4':
-                cout<<"0100";
-                break;
-            case '5':
-                cout<<"0101";
-                break;
-            case '6':
-                cout<<"0110";
-                break;
-            case '7':
-                cout<<"0111";
-                break;
-            case '8':
-                cout<<"1000";
-                break;
-            case '9':
-                cout<<"1001";
-                break;
-            case 'A':
-            case 'a':
-                cout<<"1010";
-                break;
-            case 'B':
-            case 'b':
-                cout<<"1011";
-                break;
-            case 'C':
-            case 'c':
-                cout<<"1100";
-                break;
-            case 'D':
-            case 'd':
-                cout<<"1101";
-                break;
-            case 'E':
-            case 'e':
-                cout<<"1110";
-                break;
-            case 'F':
-            case 'f':
-                cout<<"1111";
-                break;
-            default:
-                cout<<"--Invalid Hex Digit ("<<NumYouEnter[i]<<")--";
+void func(long long int n2, int b2){
+    if(n2>0){
+        func(n2/b2,b2);
+        int i= n2%b2;
+        if(i>=0&&i<=9){
+            i+=48;      //0=48
         }
-        i++;
+        else if(i>=10&&i<=35){
+            i+=55;      //10=A
+        }
+        else if(i>=36&&i<=61){
+            i+=61;      //36=a
+        }
+        else if(i=='+'||i=='/'){
+            i-=19;       //62=+
+        }
+        cout << (char)i;
     }
-    cout<<endl;
+}
+void convertToBase(char n1[], int b1, int b2){
+
+    long long int n2 = convertToDec(n1,b1);
+
+    if(n2==0)
+        cout << 0;
+
+    func(n2,b2);
 }
 
-void BaseEightToTwo(int NumYouEnter){
-    
-    string bin{};
-    
-    while( NumYouEnter > 0 && NumYouEnter < 8) {
-        if( NumYouEnter % 10 == 0 ) bin.insert( bin.begin( ), '0' );
-        else bin.insert( bin.begin( ), '1' );
-        
-        NumYouEnter >>= 1;
-    }
-    
-    cout << "\nbinary value = " << bin << "\n";
-}
+int main(int i=1){
 
-// Main function
-int main(){
-    bool run = true;
-    string choice,continuechoice;
-    int inputedvalue, count=0;
-	char inputedvaluehex[10];
-
-    while(run){
-        cout << "What base do you want to convert?\n choices: \n 'hex' | 'dec' | 'oct'\n";
-        cin >> choice;
-
-        // Decimal to Binary
-        if(choice == "dec"){
-
-            cout << "Enter the Decimal value you want to convert: ";
-            cin >> inputedvalue;
-            BaseTenToTwo(inputedvalue);
-
-            //asking if you want to retry or not
-            cout << "Do you want to continue? | 'yes' or 'no' |\n\n";
-            cin >> continuechoice;
-
-            if(continuechoice == "yes"){
-                count++;
-            }
-            else if(continuechoice == "no"){
-                cout << "\nGoodbye";
-                run = false;
-            }
-            else{
-                cout << "\nInvalid choice, Ill end the program";
-                run = false;
-            }
-
-        }
-
-        // Hexadecimal to Binary
-        if(choice == "hex"){
-            
-            cout << "Enter the Hexadecimal value you want to convert: ";
-            cin >> inputedvaluehex;
-            BaseSixteenToTwo(inputedvaluehex);
-
-            //asking if you want to retry or not
-            cout << "Do you want to continue? | 'yes' or 'no' |\n\n";
-            cin >> continuechoice;
-
-            if(continuechoice == "yes"){
-                count++;
-            }
-            else if(continuechoice == "no"){
-                cout << "\nGoodbye";
-                run = false;
-            }
-            else{
-                cout << "\nInvalid choice, Ill end the program";
-                run = false;
-            }
-
-        }
-
-        // Octal to Binary
-        if(choice == "oct"){
-            
-            cout << "Enter the Octal value you want to convert: ";
-            cin >> inputedvalue;
-            BaseEightToTwo(inputedvalue);
-
-            //asking if you want to retry or not
-            cout << "Do you want to continue? | 'yes' or 'no' |\n\n";
-            cin >> continuechoice;
-
-            if(continuechoice == "yes"){
-                count++;
-            }
-            else if(continuechoice == "no"){
-                cout << "\nGoodbye";
-                run = false;
-            }
-            else{
-                cout << "\nInvalid choice, Ill end the program";
-                run = false;
-            }
-
-        }
-
-
+    if(!i){
+        return 0;
     }
 
+    char n1[100];
+    int b1, b2;
 
+    cout << "Input string: ";
+    cin >> n1;
+    cout << "Base: ";
+    cin >> b1;
+    cout << "Desired base: ";
+    cin >> b2;
 
+    cout << "Output: ";
+    convertToBase(n1,b1,b2);
+
+    cout << "\n\nEnter 0 to exit, 1 to continue ";
+    cin >> i;
+    cout << endl;
+
+    main(i);
 }
